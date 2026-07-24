@@ -15,7 +15,7 @@ import {
 import { createHash } from 'crypto';
 // Only used to *reject* it as a socket location; see InvalidSocketDirConfigured.
 import { tmpdir as systemTmpDir } from 'tmp';
-import { NX_TMP_DIR } from '../utils/nx-tmp-dir';
+import { NX_TMP_DIR, NX_TMP_DIR_POSIX } from '../utils/nx-tmp-dir';
 import { workspaceRoot } from '../utils/workspace-root';
 
 /**
@@ -73,6 +73,13 @@ export function isDaemonDisabled() {
  * Windows named pipes are not filesystem-gated, so the OS temp dir is fine.
  */
 export const NX_SOCKET_ROOT = join(NX_TMP_DIR, 'sockets');
+
+/**
+ * The same root spelled as the literal POSIX path, for writing into a sandbox
+ * allowlist that gets committed. The per-uid directory below it is what keeps
+ * users apart, so one entry here covers every socket Nx binds.
+ */
+export const NX_SOCKET_ROOT_POSIX = join(NX_TMP_DIR_POSIX, 'sockets');
 
 export function getNxSocketRoot(): string {
   return (

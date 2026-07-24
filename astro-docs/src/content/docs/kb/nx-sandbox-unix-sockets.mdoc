@@ -55,7 +55,7 @@ The daemon, forked task processes and plugin workers put their sockets under a s
 }
 ```
 
-The path is identical on every machine, so the entries are safe to commit and share with your team.
+The path is identical on every machine, so the entries are safe to commit and share with your team. Running `nx configure-ai-agents` adds them to `.claude/settings.json` automatically.
 
 The write grant covers `/tmp/.nx` rather than only `/tmp/.nx/sockets` because a grant scoped to the socket directory cannot create `/tmp/.nx` itself, so the very first Nx run in a fresh sandbox fails before it reaches the socket. Nx also copies its compiled native binding into a cache under the same root before loading it, which the grant needs to cover for the same reason.
 
